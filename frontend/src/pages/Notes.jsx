@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const Notes = () => {
   const [notes, setNotes] = useState([]);
 
@@ -20,6 +21,9 @@ const Notes = () => {
   return (
     <div>
       <h1>All Notes</h1>
+      <button>
+        <Link to="/add">+Add</Link>
+      </button>
       <div className="notes">
         {notes.map((note) => (
           <div className="note" key={note.noteid}>
