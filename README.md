@@ -10,6 +10,7 @@ A CRUD web application that stores text entries submitted by users. The applicat
 - MySQL database used to store user-submitted text entries.
 
 ## Technologies Used
+- Vite
 - React
 - Express.js
 - MySQL
