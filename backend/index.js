@@ -44,6 +44,16 @@ app.post("/notes", (req, res) => {
   });
 });
 
+app.delete("/notes/:id", (req, res) => {
+  const query = "DELETE FROM notes WHERE noteid = ?";
+  const bookId = req.params.id;
+
+  connection.query(query, [bookId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Note deleted Successfully");
+  });
+});
+
 app.listen(port, (err) => {
   if (err) console.log(err);
   console.log("backend is running!");

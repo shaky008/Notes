@@ -5,7 +5,6 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    //
     const fetchAllNotes = async () => {
       try {
         const res = await axios.get("http://localhost:8800/notes");
@@ -14,9 +13,17 @@ const Notes = () => {
         console.log(err);
       }
     };
-
     fetchAllNotes();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/notes/" + id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -29,7 +36,12 @@ const Notes = () => {
           <div className="note" key={note.noteid}>
             <h2>{note.title}</h2>
             <button id="viewNote-btn">View Note</button>
-            <button id="deleteNote-btn">Delete Note</button>
+            <button
+              id="deleteNote-btn"
+              onClick={() => handleDelete(note.noteid)}
+            >
+              Delete Note
+            </button>
           </div>
         ))}
       </div>
