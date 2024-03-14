@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Add = () => {
-  const [note, setNote] = useState({
+  const [notes, setNotes] = useState({
     title: "",
     desc: "",
   });
@@ -11,14 +11,14 @@ const Add = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setNote((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setNotes((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     //prevents browser from reloading when clicking button
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/notes", note);
+      await axios.post("http://localhost:8800/notes", notes);
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -27,18 +27,23 @@ const Add = () => {
 
   return (
     <div className="add">
+      <button>
+        <Link to="/">Cancel</Link>
+      </button>
       <h1>Add Notes</h1>
       <input
         type="text"
         placeholder="title"
         name="title"
         onChange={handleChange}
+        required
       />
-      <input
+      <textarea
         type="text"
         placeholder="descption"
         name="desc"
         onChange={handleChange}
+        required
       />
       <button onClick={handleClick}>Upload</button>
     </div>

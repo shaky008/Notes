@@ -35,7 +35,9 @@ const Notes = () => {
         {notes.map((note) => (
           <div className="note" key={note.noteid}>
             <h2>{note.title}</h2>
-            <button id="viewNote-btn">View Note</button>
+            <button id="viewNote-btn">
+              <Link to={`/update/${note.noteid}`}>View</Link>
+            </button>
             <button
               id="deleteNote-btn"
               onClick={() => handleDelete(note.noteid)}

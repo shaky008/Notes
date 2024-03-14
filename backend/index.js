@@ -23,10 +23,20 @@ app.get("/", (req, res) => {
   res.json("Hello ");
 });
 
-//gets data from the database, cannot update it bcz its gets
+//gets all notes from the database
 app.get("/notes", (req, res) => {
   const query = "SELECT * FROM notes;";
   connection.query(query, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//gets a single note
+app.get("/notes/:id", (req, res) => {
+  const query = "SELECT * FROM notes WHERE noteid = ?;";
+  const value = req.params.id;
+  connection.query(query, [value], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
@@ -44,6 +54,7 @@ app.post("/notes", (req, res) => {
   });
 });
 
+//to delete selected note from DB
 app.delete("/notes/:id", (req, res) => {
   const query = "DELETE FROM notes WHERE noteid = ?";
   const bookId = req.params.id;
@@ -51,6 +62,18 @@ app.delete("/notes/:id", (req, res) => {
   connection.query(query, [bookId], (err, data) => {
     if (err) return res.json(err);
     return res.json("Note deleted Successfully");
+  });
+});
+
+//to update selected note from DB
+app.put("/notes/:id", (req, res) => {
+  const bookId = req.params.id;
+  const query = "UPDATE notes SET `title` = ?, `desc` = ? WHERE noteid = ?";
+  const values = [req.body.title, req.body.desc];
+
+  connection.query(query, [...values, bookId], (err, data) => {
+    if (err) return err.json(err);
+    return res.json("Notes updated Sucessfully");
   });
 });
 
